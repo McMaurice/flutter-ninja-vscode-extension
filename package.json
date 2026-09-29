@@ -1,12 +1,12 @@
 {
   "name": "flutter-ninja",
   "displayName": "Flutter Ninja",
-  "publisher": "macmaurice-osuji",
-  "description": "Compose a production-minded Flutter foundation with clean architecture, starter blueprints, and independent Android and iOS build setup",
+  "publisher": "MacMauriceOsuji",
+  "description": "Compose a Flutter foundation with clean architecture, starter blueprints, and independent Android and iOS build setup",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/macmaurice-osuji/flutter-ninja.git"
+    "url": "https://github.com/McMaurice/flutter-ninja-vscode-extension"
   },
   "engines": {
     "vscode": "^1.90.0"
@@ -23,6 +23,7 @@
     "architecture"
   ],
   "main": "./dist/extension.js",
+  "activationEvents": [],
   "icon": "images/icon.png",
   "capabilities": {
     "untrustedWorkspaces": {
