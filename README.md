@@ -3,7 +3,7 @@
 Scaffold a clean, production-ready Flutter app shell in minutes — architecture, starter code, and Android/iOS build setup, each optional and independently selectable.
 
 Flutter Ninja is open source. Contributions are welcome at:
-**https://github.com/macmaurice-osuji/flutter-ninja** *(replace with your actual repo URL)*
+**https://github.com/McMaurice/flutter-ninja-vscode-extension**
 
 ## Why this exists
 
@@ -92,3 +92,9 @@ Branch strategy: `development` for active work and review, `production` for rele
 ## License
 
 MIT
+
+## Contributors
+
+<a href="https://github.com/McMaurice/flutter-ninja-vscode-extension/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=McMaurice/flutter-ninja-vscode-extension" />
+</a>
