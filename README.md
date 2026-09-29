@@ -1,182 +1,94 @@
 # Flutter Ninja
 
-Flutter Ninja is an open-source VS Code extension that helps developers scaffold a clean, production-ready Flutter app shell in minutes.
+Scaffold a clean, production-ready Flutter app shell in minutes — architecture, starter code, and Android/iOS build setup, each optional and independently selectable.
 
-It is designed for teams and solo builders who want a strong starting point for standard Flutter apps without starting from a blank project each time. Choose any combination of four focused setup options: architecture, starter blueprints, Android build configuration, and iOS build configuration.
+Flutter Ninja is open source. Contributions are welcome at:
+**https://github.com/macmaurice-osuji/flutter-ninja** *(replace with your actual repo URL)*
 
-## Why this project exists
+## Why this exists
 
-Starting a Flutter project from scratch often means repeating the same setup work:
+Starting a Flutter project usually means repeating the same setup work: folder conventions, wiring providers and app state, route and shell structure, app constants/theme/utilities, and Android/iOS build configuration. Flutter Ninja automates that baseline so you start on real feature work sooner.
 
-- creating folder conventions
-- wiring providers and app state
-- adding route and shell structure
-- setting up app constants, theme, and utilities
-- preparing Android and iOS build configuration
-- keeping the project clean and ready for real feature work
+## Features
 
-Flutter Ninja automates that baseline to save time and reduce mistakes.
+Every option below is independently selectable, so you can generate just what you need or all four in one pass.
 
-## Four setup options
+- **Clean Architecture** — creates the complete folder layout and barrel files, with short start-here placeholders in each file. Implementation decisions stay yours.
+- **Starter Core Blueprints** — fills that architecture with a working app shell, routing (go_router), state management (Riverpod), an API service (Dio), local preferences, and example home/settings screens.
+- **Android Build Configuration** — sets up Gradle release signing with a protected `key.properties` file and a safe debug fallback. Existing credentials are never overwritten.
+- **iOS Build Configuration** — sets up bundle identity, release configuration, export options, and editable permission-string placeholders for App Store delivery.
 
-Every option is independently selectable, so Flutter Ninja can create only the foundation you need or compose the full project setup in one pass:
+Built-in safeguards:
 
-- **Clean Architecture** creates the complete folder layout and barrel files with short start-here placeholders, leaving implementation decisions to you.
-- **Starter Core Blueprints** fills that architecture with the app shell, routing, state management, services, screens, and starter dependencies.
-- **Android Build Configuration** prepares Gradle release signing, protected key properties, and a debug fallback while leaving existing credentials untouched.
-- **iOS Build Configuration** prepares bundle identity, release configuration, export options, and editable permission placeholders for App Store delivery.
+- Project validation before generation, with clear warnings for risky states
+- A choice between **keep** (add only missing files) and **replace** (overwrite generated files; `lib/src` goes to Trash, recoverable) for architecture and blueprints
+- Android and iOS setup each get their own confirmation and only touch their own platform
+- Existing Android signing files are never overwritten
+- A summary report after every run, listing what was created, replaced, skipped, and any warnings
 
-## What the generator creates
+## Usage
 
-The extension produces a standard Flutter app shell with:
+1. Open the folder you want to generate into (or right-click a folder in the Explorer).
+2. Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`).
+3. Run **Flutter Ninja: Configure Project**.
+4. Choose any combination of the four setup options.
+5. For a new project, enter a package name, organization, display name, and description. For an existing project, these are read from `pubspec.yaml` and never renamed.
+6. If matching files already exist, choose **keep** or **replace**.
+7. Review the summary and, for Android, use the **Copy keytool command** button to generate your release keystore.
 
-- `lib/` app structure and clean folder conventions
-- app shell and provider architecture when Starter Core Blueprints is selected
-- app constants, theme, helpers, and utilities
-- user preferences handling
-- placeholder home and settings feature structure
-- service folders for API and notifications
-- Android signing support for release builds
-- iOS publishing config for App Store-ready setup
-- a generated safety/setup guide for the new project
+## Commands
 
-The generated structure is intentionally focused on standard app needs rather than highly custom database-heavy or domain-specific logic.
+| Command | Description |
+|---|---|
+| `Flutter Ninja: Configure Project` | Opens the setup flow: choose modules, enter project details, and generate. Also available from the Explorer right-click menu on a folder. |
 
-## Safe usage guidance
+## Settings
 
-This extension is designed to help, but it should still be used carefully.
+Flutter Ninja has no configurable settings yet — every choice (which modules to run, keep vs. replace, project details) is made in the setup flow each time you run the command.
 
-### Before running the generator
+## Screenshots
 
-- confirm you are targeting the correct project folder
-- review whether the target project is brand new or already contains app code
-- for architecture or starter generation, choose whether to keep matching files and add only missing files, or replace generated files
-- replace mode moves the existing `lib/src/` folder to Trash; matching generated files such as `lib/main.dart` are also replaced, while unrelated `lib/` files remain
-- Android and iOS build setup each require confirmation and update only the selected platform's generated build settings
-- review conflicts before continuing
+**1. Choose what to set up**
 
-### Protection built into the extension
+![Module picker](images/screenshot-1-module-picker.png)
 
-The generator includes safeguards such as:
+Pick any combination of Clean Architecture, Starter Blueprints, Android Build Configuration, and iOS Build Configuration. Starter Blueprints automatically includes Clean Architecture, so you always get a valid structure.
 
-- project validation before generation
-- separate overwrite confirmations for architecture and platform build setup
-- conflict detection for generated files
-- no overwrite of existing Android signing files
-- warnings for risky project states
-- summary reporting after generation
+**2. Decide how to handle existing files**
 
-### iOS and Android publishing setup
+![Keep or replace existing files](images/screenshot-2-keep-or-replace.png)
 
-The extension creates a standard release-ready baseline, but users should still review the generated output before shipping:
+If matching files already exist, Flutter Ninja pauses and asks before touching anything. **Keep** adds only what's missing; **Replace** moves `lib/src` to the Trash (recoverable) and regenerates it.
 
-- update the real Apple Team ID for iOS signing
-- confirm the iOS bundle ID is correct
-- review permission descriptions in `ios/Runner/Info.plist`
-- update any placeholder strings that are app-specific
-- confirm Android signing values before release builds
-- keep app-specific permissions limited to what the app actually needs
+**3. Get a quick summary when it's done**
 
-The generated output is meant to reduce setup friction, not replace final release review.
+![Summary notification with a Copy keytool command button](images/screenshot-3-summary.png)
+
+A short notification confirms the result, with a one-click button to copy the `keytool` command for generating your Android release keystore.
 
 ## Requirements
 
-- VS Code
-- Flutter SDK installed and available on your PATH
-- access to a target folder or Flutter project root
+- VS Code 1.90 or later
+- Flutter SDK installed and available on your PATH (required for the "flutter create" and "flutter pub add" steps)
+- An existing Flutter project, or an empty folder to create one in
 
-## Installation
+## Known Issues
 
-1. open this project in VS Code
-2. run `npm install`
-3. press `F5` to launch the extension in a development host window
-4. open a real folder or Flutter project
-5. run the command: `Flutter Ninja: Configure Project`
+- Only Kotlin DSL (`build.gradle.kts`) Android projects are auto-patched for signing; Groovy (`build.gradle`) projects get a warning instead and need the signing block added manually.
+- Renaming an existing project's package name, Android `applicationId`, or iOS bundle ID is not performed automatically, since that's risky on a live project.
+- No settings UI yet to pre-select default modules or dependencies.
 
-## Local development
-
-From the repo root:
-
-- `npm install`
-- `npm run check-types`
-- `npm run lint`
-- `npm run compile`
-
-To test the extension live:
-
-- press `F5`
-- in the new Extension Development Host window, open a project
-- run the command from the Command Palette
-
-## Packaging before release
-
-Before publishing to VS Code Marketplace:
-
-- run the validation commands above
-- test the extension on a fresh Flutter project
-- test it on an existing project in keep mode and replace mode
-- confirm both Android and iOS configuration outputs look correct
-- create a local VSIX package for final validation
-
-Example:
-
-- `npx @vscode/vsce package`
+Found a bug or have a feature request? Please open an issue or pull request against `development` in the repo linked above.
 
 ## Contributing
 
-We welcome contributions from the community.
+1. Fork the repository.
+2. Create a feature branch from `development`.
+3. Make focused, well-documented changes.
+4. Open a pull request targeting `development`.
 
-### How to contribute
-
-1. fork the repository
-2. create a feature branch from `development`
-3. make your changes with clear commit history
-4. keep changes focused and well-documented
-5. open a pull request targeting `development`
-
-### Pull request workflow
-
-All pull requests should be opened against the `development` branch.
-
-The team will review and approve PRs there. Once approved, changes can be merged into the release branch or production flow as part of the normal release process.
-
-Please keep PRs:
-
-- focused on one issue or feature
-- readable and well-scoped
-- tested locally before submission
-- clear about what changed and why
-
-### Branch strategy
-
-Recommended flow:
-
-- `development` for active work and review
-- `production` for fully approved release-ready changes
-- feature branches for isolated work
-
-## Code of conduct
-
-This project is open source and community-driven. Please be respectful, constructive, and collaborative in issue discussions, pull requests, and code review comments.
-
-## Roadmap
-
-Planned focus areas include:
-
-- richer app-shell generation options
-- stronger app-specific module selection
-- more advanced iOS and Android config templates
-- better onboarding docs and examples
-- community PR review and release quality checks
+Branch strategy: `development` for active work and review, `production` for release-ready changes, feature branches for isolated work. Please keep pull requests focused on one issue or feature, readable, and tested locally before submission.
 
 ## License
 
-This project is open source. Developers are encouraged to contribute through a pull request
-
-## Support
-
-If you find a bug, want a feature, or have a question, open an issue or submit a pull request against `development`.
-
-## Acknowledgements
-
-Thanks to everyone contributing to cleaner Flutter tooling and better startup workflows for app teams.
+MIT

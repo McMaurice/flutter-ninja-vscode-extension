@@ -4,6 +4,10 @@
   "publisher": "macmaurice-osuji",
   "description": "Compose a production-minded Flutter foundation with clean architecture, starter blueprints, and independent Android and iOS build setup",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/macmaurice-osuji/flutter-ninja.git"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -19,6 +23,7 @@
     "architecture"
   ],
   "main": "./dist/extension.js",
+  "icon": "images/icon.png",
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": true
